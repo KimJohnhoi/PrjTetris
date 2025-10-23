@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="tetris.js"></script>
+    <style>
+        /** 전역변수 선언: 블럭한개 크기, gap, 색상 **/
+        :root{
+            --block-width: 4rem;
+            --block-height: 4rem;
+            --block-gap: 0.1rem;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-size: 10px; /* 10px = 1rem */
+            background-color: #b3b3b3;
+        }
+        body{
+            display: flex;
+            min-width: 120rem;
+            min-height: 90rem;
+            justify-content: center;
+            align-items: center;
+        }
+        /* ===== wrap ===== */
+        .wrap{
+            width: 76rem;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            background-color: #202060;
+        }
+        /* ===== play area  ===== */
+        .play{
+            display: flex;
+            flex-direction: column;
+        } 
+        /* drop-random block */     
+        .dropblock{
+            margin: 0 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(4,var(--block-height));
+            grid-template-rows: repeat(4, var(--block-width));
+            gap: var(--block-gap);
+            align-items: center;
+            justify-items: center;
+            background-color: black;
+            border-left: 0.1rem solid #2d2d86;
+            border-right: 0.1rem solid #2d2d86;
+        }
+        /* board */
+        .board1{
+            margin: 0 2.5rem;
+            width: calc(var(--block-width) * 10);     /* 보드판 너비 = 블럭 가로사이즈 * 10 */
+            height: calc(var(--block-height) * 20);   /* 보드판 높이 = 블럭 세로사이즈 * 20 */
+            gap: var(--block-gap);                    /* 블럭 gap */
+            display: flex;
+            background-color: black;
+            border-left: 0.1rem solid #2d2d86;
+            border-right: 0.1rem solid #2d2d86;
+        }
+        /* ===== button area ===== */
+        .button{
+            width: 15rem;
+            gap: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .button > div{
+            width: 6rem;
+            height: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 0.4rem;
+            border: 0.1rem solid #2d2d86;
+            background-color: #2d2d86;
+            font-size: 1.3rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="play">
+            <div class="dropblock">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+            <div><div></div><div></div></div>
+            <div class="board1"></div>
+        </div>
+        <div class="button">
+            <div>변경</div>
+            <div>회전</div>
+        </div>
+    </div>
+</body>
+</html>
