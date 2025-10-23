@@ -1,11 +1,36 @@
-let block, motion
+let board, piece, motion
 
-block = {
-    blockName: ["I", "O", "T", "J", "L", "N", "S"],
-    blockFill: {
-        O: [[0,0,0,0],[0,1,1,0],[0,1,1,0],[0,0,0,0]]
+board = {
+    container: document.getElementsByClassName('board'),
+    size:{ width: 10, height: 20 },
+    body:[],
+    init:() => {
+        let line;
+        
+        while(board.container.children.length > 0){ // 초기화
+            board.container.children[0].remove();
+        }
+        for(let x = 0; x < board.size.height + 2; x++){
+            board.body[x] = [];
+            line  = document.createElement('div'); // 보드에 라인 추가
+            board.appendChild(line);
+            for(let y = 0; y < board.size.width + 4; y++){ 
+                board.body[x][y] = y < 2 || y > board.size.width + 1 ? 1 : 0 // 허수 부분: 벽부분에 1을 설정함
+                line.appendChild(document.createElement('span')); // 라인에 셀 추가
+
+
+            }
+        }
     },
-    blockColor: {
+    drawCell:() => {
+
+    }
+}
+
+piece = {
+    position: { x: 0, y: 0 },
+    shape: ["I", "O", "T", "J", "L", "N", "S"],
+    color: {
         I: '#00ffff',
         O: '#ffff00',
         T: '#ff00ff',
@@ -17,25 +42,15 @@ block = {
     getBlock:() => {
         let rChoice = null;
 
-        rChoice = Math.floor(Math.random() * block.blockName.length); // 랜덤 블럭 선택
+        rChoice = Math.floor(Math.random() * piece.shape.length); // 랜덤 블럭 선택
         console.log('rChoice: '+rChoice);
-        block.drawBlock(rChoice);
+        //board.drawCell();
     },
-    drawBlock: x => {
-        let rName = null, els = document.getElementsByClassName('play').getElementsByClassName('dropblock')[0];
-        
-        rName = block.blockName[x]; // 블럭 이름 조회
-        for(let i = 1; i < 5; i++){
-            for(let j = 1; j < 5; j++){
-                if(block.blockFill.rName[i-1][j-1] === 1){
-                    let temp = 0;
-                    
+    rotate:() => { // 블록 회전 함수
 
-                    els.getElementsByClassName('item')[temp].backgroundColor = block.blockColor[rName];
-                }
-            }
-        }
-        console.log('rName: '+rName);
+    },
+    stepDown:() => { // 블록을 한칸 아래로 이동시키는 함수
+        let newY = piece.position.y + 1;
     }
 } // End of block
 
@@ -45,10 +60,9 @@ motion = {
 
         setTimeout(() => {
             clearInterval(intervalId);
-            intervalId = setInterval(block.getBlock, 200); // random 으로 블럭을 계속 생성한다.
+            intervalId = setInterval(piece.getBlock, 200); // random 으로 블럭을 계속 생성한다.
         }, 3000);
     }
-
 } // End of motion
 
 init = () => {
