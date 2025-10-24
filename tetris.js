@@ -1,6 +1,7 @@
 let board, piece, motion
 
 board = {
+    no: null,
     container: null,
     size: { width: 10, height: 20 },
     body: [],
@@ -20,13 +21,14 @@ board = {
             }
         }
     }, // End of init()
+    getCell:() => {
+        no = piece.setNew(); // 랜덤 블록의 값을 가져온다
+        board.drawCell();
+    }, //End of getCell()
     drawCell:() => {
-        let line, cell, no;
+        let line, cell;
         let tempX, tempY, temp // 랜덤 블록 보드 시작위치에 나타낼 좌표
 
-        no = piece.setNew(); // 랜덤 블록의 값을 가져온다
-        
-        // 랜덤 블럭 없을 때?
         for(let x = 0; x < board.size.height; x++){
             line = board.container.children[x];
             for(let y = 0; y < board.size.width; y++){
@@ -37,7 +39,7 @@ board = {
                 else cell.className = "";
             }
         }
-        // 랜덤블럭을 보드에 맵핑
+        // 드롭되는 랜덤블록 보드에 맵핑
         for(let i = 0; i < piece.shape.length; i++){
             tempX = i + 2;
             for(let j = 0; j < piece.shape.length; j++){
@@ -60,7 +62,7 @@ piece = {
         y: 0 
     },
     shape: [],
-    roate:() => { // 블럭 회전
+    roate: () => { // 블럭 회전
        let n = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
        n[0][0] = piece.shape[0][3];
        n[0][1] = piece.shape[1][3];
@@ -116,4 +118,13 @@ motion = {
 init = () => {
     //motion.start();
     board.container = document.getElementsByClassName('board')[0];
+    
+    let el, els;
+    els = document.getElementsByClassName('wrap')[0].getElementsByClassName('button')[0];
+    el = els.children[1]; 
+
+    el.onclick = e => { // 회전버튼을 클릭했을 시
+        piece.roate();
+        board.drawCell();
+    }
 } // End of init

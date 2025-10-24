@@ -37,9 +37,9 @@
         }
         /* ===== board ===== */
         .board{
-            width: calc(var(--block-width) * 10 + var(--block-gap) * 9);     /* 보드판 너비 = 블럭 가로사이즈 * 10 */
+            width: calc(var(--block-width) * 10 + var(--block-gap) * 9);      /* 보드판 너비 = 블럭 가로사이즈 * 10 */
             height: calc(var(--block-height) * 20 + var(--block-gap) * 19);   /* 보드판 높이 = 블럭 세로사이즈 * 20 */
-            gap: var(--block-gap);                    /* 블럭 gap */
+            gap: var(--block-gap);                                            /* 블럭 gap */
             display: flex;
             background-color: black;
             border-left: 0.1rem solid #2d2d86;
@@ -76,6 +76,9 @@
             background-color: #2d2d86;
             font-size: 1.3rem;
             color: white;
+        }
+        .button > div:hover{
+            cursor: pointer;
         }
         /* ===== cell color =====
          * shpae "I" - 1, "O" - 2, "T" - 3, "J" - 4, "L" - 5, "N" - 6, "S" - 7
