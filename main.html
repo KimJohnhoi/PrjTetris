@@ -35,15 +35,26 @@
             display: flex;
             background-color: #202060;
         }
-        /* ===== board area ===== */
+        /* ===== board ===== */
         .board{
-            width: calc(var(--block-width) * 10);     /* 보드판 너비 = 블럭 가로사이즈 * 10 */
-            height: calc(var(--block-height) * 20);   /* 보드판 높이 = 블럭 세로사이즈 * 20 */
+            width: calc(var(--block-width) * 10 + var(--block-gap) * 9);     /* 보드판 너비 = 블럭 가로사이즈 * 10 */
+            height: calc(var(--block-height) * 20 + var(--block-gap) * 19);   /* 보드판 높이 = 블럭 세로사이즈 * 20 */
             gap: var(--block-gap);                    /* 블럭 gap */
             display: flex;
             background-color: black;
             border-left: 0.1rem solid #2d2d86;
             border-right: 0.1rem solid #2d2d86;
+            flex-flow: column;
+        }
+        .board > div{
+            height:var(--block-height);
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .board > div > span{
+            display:inline-block;
+            width:var(--block-width);
+            height:var(--block-height);
         }
         /* ===== button area ===== */
         .button{
@@ -66,10 +77,20 @@
             font-size: 1.3rem;
             color: white;
         }
+        /* ===== cell color =====
+         * shpae "I" - 1, "O" - 2, "T" - 3, "J" - 4, "L" - 5, "N" - 6, "S" - 7
+         */
+        .cell-1{ background-color: #00ffff; }
+        .cell-2{ background-color: #ffff00; }
+        .cell-3{ background-color: #ff00ff; }
+        .cell-4{ background-color: #0066ff; }
+        .cell-5{ background-color: #ff9933; }
+        .cell-6{ background-color: #ff3300; }
+        .cell-7{ background-color: #00e600; }
     </style>
 </head>
-<body>
-    <div class="wrap">
+<body onload="init()">
+    <div class="wrap"> 
         <div class="board"></div>
         <div class="button">
             <div>변경</div>
