@@ -12,27 +12,46 @@ board = {
         }
         for(let x = 0; x < board.size.height + 2; x++){
             board.body[x] = [];
-            if(x < 20) line = document.createElement('div'); 
+            if(x < 20) line = document.createElement('div');
             board.container.appendChild(line); // 보드에 한 줄 추가 
             for(let y = 0; y < board.size.width + 4; y++){
                 board.body[x][y] = y < 2 || y > board.size.width + 1 ? 1 : 0  // 벽부분(허수)에 1을 설정
                 if(y < 10 && x < 20) line.appendChild(document.createElement('span')); //라인에 셀 추가
             }
         }
-    },
+    }, // End of init()
     drawCell:() => {
-        let line, cell;
+        let line, cell, no;
+        let tempX, tempY, temp // 랜덤 블록 보드 시작위치에 나타낼 좌표
+
+        no = piece.setNew(); // 랜덤 블록의 값을 가져온다
+        
+        // 랜덤 블럭 없을 때?
         for(let x = 0; x < board.size.height; x++){
             line = board.container.children[x];
             for(let y = 0; y < board.size.width; y++){
                 cell = line.children[y];
+                // console.log(`x:${x}/y:${y}`)
                 // 보드의 2차원 배열을 참고하여 셀의 상태를 업데이트
-                console.log(`x:${x}/y:${y}`)
                 if(board.body[x+2][y+2] > 0) cell.className = "cell-" + (board.body[x+2][y+2]);
                 else cell.className = "";
             }
         }
-    }
+        // 랜덤블럭을 보드에 맵핑
+        for(let i = 0; i < piece.shape.length; i++){
+            tempX = i + 2;
+            for(let j = 0; j < piece.shape.length; j++){
+                tempY = j + 3;
+                temp = tempX + "" + tempY;
+                temp = temp * 1;
+                cell = document.getElementsByTagName('span')[temp];
+
+                if(piece.shape[i][j] > 0) { 
+                    cell.className = "cell-" + (no+1);
+                }
+            }
+        }
+    } // End of drawCell()
 }
 
 piece = {
@@ -63,7 +82,7 @@ piece = {
     },
     stepDown:() => { // 블럭 한칸 아래로 이동
         let newY = piece.position.y + 1;
-    },
+    }, // End of stepDown()
     setNew:() => {
         let no, blocks = [
             [[0,0,0,0],[0,1,1,0],[0,1,1,0],[0,0,0,0]], // "I" - 0 
@@ -76,7 +95,6 @@ piece = {
         ]
 
         no = Math.floor(Math.random() * blocks.length); // 랜덤으로 블럭 뽑기
-        console.log(`random-no: ${no}`);
         piece.position.x = 3;
         piece.shape = blocks[no];
 
@@ -92,7 +110,7 @@ motion = {
             clearInterval(intervalId);
             intervalId = setInterval(piece.setNew, 200); // random 으로 블럭을 계속 생성한다.
         }, 3000);
-    }
+    } // End of start()
 }
 
 init = () => {
