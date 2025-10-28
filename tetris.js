@@ -24,7 +24,7 @@ board = {
     getCell:() => {
         no = piece.setNew(); // 랜덤 블록의 값을 가져온다
         board.drawCell();
-    }, //End of getCell()
+    }, // End of getCell()
     drawCell:() => {
         let line, cell;
         let tempX, tempY, temp // 랜덤 블록 보드 시작위치에 나타낼 좌표
@@ -43,7 +43,8 @@ board = {
         for(let i = 0; i < piece.shape.length; i++){
             tempX = i + 2;
             for(let j = 0; j < piece.shape.length; j++){
-                tempY = j + 3;
+                tempY = j + piece.position.x;
+                console.log(`Y값: ${tempY}`);
                 temp = tempX + "" + tempY;
                 temp = temp * 1;
                 cell = document.getElementsByTagName('span')[temp];
@@ -82,9 +83,17 @@ piece = {
        n[3][3] = piece.shape[3][0];
        piece.shape = n;
     },
-    stepDown:() => { // 블럭 한칸 아래로 이동
+    stepDown:() => { // 블럭 한칸 아래 이동
         let newY = piece.position.y + 1;
     }, // End of stepDown()
+    stepSide: x => { // 블럭 좌우 이동
+        if(x === 'left'){
+            piece.position.x = piece.position.x - 1;
+        } else if(x === 'right'){
+            piece.position.x = piece.position.x + 1;
+        }
+        board.drawCell();
+    }, // End of stepSide()
     setNew:() => {
         let no, blocks = [
             [[0,0,0,0],[0,1,1,0],[0,1,1,0],[0,0,0,0]], // "I" - 0 
@@ -119,12 +128,17 @@ init = () => {
     //motion.start();
     board.container = document.getElementsByClassName('board')[0];
     
-    let el, els;
+    let el1, els;
     els = document.getElementsByClassName('wrap')[0].getElementsByClassName('button')[0];
-    el = els.children[1]; 
+    el1 = els.children[1]; 
 
-    el.onclick = e => { // 회전버튼을 클릭했을 시
+    el1.onclick = e => { // 회전버튼을 클릭했을 시
         piece.roate();
         board.drawCell();
     }
+
+    window.addEventListener('keyup', e => { // 키보드 좌우 이벤트 등록 Error
+        if(e.key === 'ArrowLeft') piece.stepSide('left');
+        else if(e.key === 'ArrowRight') piece.stepSide('right');
+    });
 } // End of init
