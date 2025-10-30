@@ -107,8 +107,10 @@ piece = {
         for(y = 0 ; y < 4 ; y++){
             for(x = 0 ; x < 4 ; x++){
                 console.log(`(x,y)/(p.x,p.y):(${x},${y}) / (${p.x},${p.y})`)
-                t = board.body[p.x+x+2][p.y+y+2] * piece.shape[x][y];
-                if(t === 0) return true; 
+                //t = board.body[p.x+x+2][p.y+y+2] * piece.shape[x][y]; // 큰 귀요미꺼
+                t = board.body[p.x+x+1][p.y+y+1] * piece.shape[x][y]; // (x+1)(y+1) => 좌우에 따라 달라져야하는것 아닌가?? 
+                console.log(`t: ${t}`);
+                if(t === 0) return true; // 수정 
             }
         }
         return false;
